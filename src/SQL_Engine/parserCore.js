@@ -15,8 +15,38 @@ define(['ParserPattern'], function(Pattern) {
           }
         }
       });
-    }
+    },
 
+    rgx: function(regexp) {
+      return new Pattern(function (str, pos) {
+        var result = regexp.exec(str.slice(pos));
+        if (result && result.index === 0) {
+          return {
+            res: result[0],
+            end: pos + result[0].length
+          }
+        }
+      })
+    },
+
+    opt: function(pattern) {
+      return new Pattern(function (str, pos) {
+
+        var resPattern = pattern(str, pos);
+        var result = resPattern.res;
+        var endPos = resPattern.end;
+
+        if (typeof result === 'undefined'  ) {
+          endPos = 0;
+        }
+
+        return {
+          res: result,
+          end: endPos
+        };
+
+      })
+    }
   };
 
   return SQLParser;
