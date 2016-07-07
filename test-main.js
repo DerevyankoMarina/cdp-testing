@@ -18,7 +18,8 @@ require.config({
   baseUrl: '/base',
 
   paths: {
-    SQLParser: './src/SQL_Engine/parserCore'
+    SQLParser: './src/SQL_Engine/parserCore',
+    ParserPattern: "./src/SQL_Engine/parserPattern"
   },
 
   // dynamically load all test files

@@ -1,12 +1,20 @@
-define([], function() {
+define(['ParserPattern'], function(Pattern) {
   /*'use strict';*/
-  console.log('create parser');
+  console.log(Pattern);
+
   var SQLParser = function() {};
 
 
   SQLParser.prototype = {
-    txt: function() {
-
+    txt: function(text) {
+      return new Pattern(function (str, pos) {
+        if (str.substr(pos, text.length) == text) {
+          return {
+            res: text,
+            end: pos + text.length
+          }
+        }
+      });
     }
 
   };
