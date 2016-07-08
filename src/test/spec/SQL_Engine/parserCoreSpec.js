@@ -90,9 +90,98 @@ define(['SQLParser'], function(SQLParser) {
                                                         });
 
       });
-
-
     });
+
+
+    describe('exc', function() {
+      it('should be a function', function () {
+        expect(parser.exc).toEqual(jasmine.any(Function));
+      });
+
+      it('should parse first pattern', function () {
+
+        var pattern = parser.rgx(/[A-Z]+/);
+        var except = parser.txt('FROM');
+        var exc = parser.exc(pattern, except);
+
+        expect(exc.exec('SELECT', 0)).toEqual({
+                                                res: 'SELECT',
+                                                end: 6
+                                              });
+      });
+
+      it('should return undefined if it CAN parse second pattern', function () {
+
+        var pattern = parser.rgx(/[A-Z]+/);
+        var except = parser.txt('FROM');
+        var exc = parser.exc(pattern, except);
+
+        expect(exc.exec('FROM', 0)).toBeUndefined();
+      });
+    });
+
+
+    describe('any', function() {
+      it('should be a function', function () {
+        expect(parser.any).toEqual(jasmine.any(Function));
+      });
+
+      it('should return first matching result only', function () {
+        var p1 = parser.txt("abc");
+        var p2 = parser.txt("def");
+        var any = parser.any(p1, p2);
+
+        expect(any.exec('abc', 0)).toEqual({
+          res: 'abc',
+          end: 3
+        });
+
+        expect(any.exec('def', 0)).toEqual({
+          res: 'def',
+          end: 3
+        });
+
+      });
+
+
+      it('should return undefined if any pattern does not match', function () {
+        var p1 = parser.txt("abc");
+        var p2 = parser.txt("def");
+        var any = parser.any(p1, p2);
+
+        expect(any.exec('ABC', 0)).toBeUndefined();
+      });
+    });
+
+
+    describe('seq', function() {
+      it('should be a function', function () {
+        expect(parser.seq).toEqual(jasmine.any(Function));
+      });
+
+      it('should sequentially parse the text according to the sequence of patterns and return an array of results ', function () {
+        var p1 = parser.txt("abc");
+        var p2 = parser.txt("def");
+        var seq = parser.seq(p1, p2);
+
+        expect(seq.exec('abcdef')).toEqual({
+          res: ["abc", "def"],
+          end: 6
+        });
+      });
+
+      it('should return undefined if one of patterns do not match', function () {
+        var p1 = parser.txt("abc");
+        var p2 = parser.txt("def");
+        var seq = parser.seq(p1, p2);
+
+        expect(seq.exec('abcde1')).toBeUndefined();
+      });
+    });
+
+
+
+
   });
 });
 

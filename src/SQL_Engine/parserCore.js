@@ -47,16 +47,44 @@ define(['ParserPattern'], function(Pattern) {
       })
     },
 
-    exc: function() {
-
+    exc: function(pattern, except) {
+      return new Pattern(function (str, pos) {
+        var res = !except.exec(str, pos) && pattern.exec(str, pos);
+        if (!res) return;
+        return res;
+      });
     },
 
     any: function() {
+      var patterns = [].slice.call(arguments, 0);
 
+      return new Pattern(function (str, pos) {
+        for (var i = 0; i < patterns.length; i++) {
+          var res = patterns[i].exec(str, pos);
+          if ( res ) return res;
+        }
+      });
     },
 
     seq: function() {
+      var patterns = [].slice.call(arguments, 0);
 
+      return new Pattern(function (str, pos) {
+        var resArr = [];
+
+        for (var i = 0; i < patterns.length; i++) {
+          var pos = resPos || 0;
+          var result = patterns[i].exec(str, pos);
+          if ( !result ) return;
+          resArr.push(result.res);
+          var resPos = result.end;
+        }
+
+        return {
+          res: resArr,
+          end: resPos
+        };
+      });
     },
 
     rep: function() {
