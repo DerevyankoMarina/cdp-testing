@@ -76,28 +76,23 @@ define(['SQLParser'], function(SQLParser) {
         expect(parser.opt).toEqual(jasmine.any(Function));
       });
 
-/*
-    it('should make pattern optional', function () {
-      var select = parser.txt('SELECT', 0);
-      var optSelect = parser.txt(select);
+      it('should make pattern optional', function () {
+        var select = parser.txt('SELECT');
+        var optSelect = parser.opt(select);
+        expect(optSelect.exec('SELECT * FROM', 0)).toEqual({
+                                                          res: 'SELECT',
+                                                          end: 6
+                                                        });
 
-      expect(optSelect.exec('SELECT * FROM').toEqual({
-                                                        res: 'SELECT',
-                                                        end: 6
-                                                      }));
+        expect(optSelect.exec('SLCT * FROM', 0)).toEqual({
+                                                          res: undefined,
+                                                          end: 0
+                                                        });
 
-      expect(optSelect.exec('SLCT * FROM').toEqual({
-                                                        res: undefined,
-                                                        end: 0
-                                                      }));
       });
 
+
     });
-*/
-
-
-
   });
-});
 });
 

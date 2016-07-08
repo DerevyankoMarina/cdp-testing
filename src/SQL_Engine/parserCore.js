@@ -32,32 +32,45 @@ define(['ParserPattern'], function(Pattern) {
     opt: function(pattern) {
       return new Pattern(function (str, pos) {
 
-        var resPattern = pattern(str, pos);
-        var result = resPattern.res;
-        var endPos = resPattern.end;
-
-        if (typeof result === 'undefined'  ) {
-          endPos = 0;
+        var result = pattern.exec(str, pos);
+        var res;
+        var end = 0;
+        if (result) {
+          res = result.res;
+          end = result.end;
         }
 
         return {
-          res: result,
-          end: endPos
+          res:  res,
+          end: end
         };
-
       })
+    },
+
+    exc: function() {
+
+    },
+
+    any: function() {
+
+    },
+
+    seq: function() {
+
+    },
+
+    rep: function() {
+
     }
+
   };
 
   return SQLParser;
 
-
-  // SELECT * FROM movie
-
-
-
 });
 
+
+var strng = "SELECT * FROM movie";
 
 var db  = {
   movie: [
