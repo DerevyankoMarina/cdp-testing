@@ -179,9 +179,24 @@ define(['SQLParser'], function(SQLParser) {
       });
     });
 
+    describe('rep', function() {
+      it('should be a function', function () {
+        expect(parser.seq).toEqual(jasmine.any(Function));
+      });
+
+      it('should read a repeatable sequence', function () {
+        var p = parser.rgx(/\d+/);
+        var s = parser.txt(",");
+        var rep = parser.rep(p, s);
+
+        expect(rep.exec('"1,23,456", 0')).toEqual({
+          res: ["1", "23", "456"],
+          end: 8
+        });
+      });
 
 
-
+    });
   });
 });
 

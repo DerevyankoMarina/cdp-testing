@@ -87,8 +87,25 @@ define(['ParserPattern'], function(Pattern) {
       });
     },
 
-    rep: function() {
+    rep: function(pattern, separator) {
+      /*var separated;
+      if (!separator) {
+        separated = pattern;
+      } else {
+        separated = this.seq(separator, pattern).then(r => r[1]);
+      }
 
+      return new Pattern(function (str, pos) {
+        var res = [], end = pos, r = pattern.exec(str, end);
+
+        while (r && r.end > end) {
+          res.push(r.res);
+          end = r.end;
+          r = separated.exec(str, end);
+        }
+
+        return { res: res, end: end };
+      });*/
     }
 
   };
@@ -128,25 +145,3 @@ var db  = {
     { movieID: 3, actorID: 2 }
   ]
 };
-
-//SQLEngine.setDb(db);
-//SQLEngine.execute('SELECT * FROM actor');
-
-
-// jsonsql.query("select * from json.channel.items order by title desc", json);
-
-/*
-
- name = 1 OR name = 2 OR name in(3,4)
-
- var result = {
- SELECT: {
- table: "zzzz",
- fields: [sdssd, asdasdm, ddasda]
- },
-
- JOIN: {
-
- }
- }
- ];*/
