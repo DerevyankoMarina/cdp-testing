@@ -177,6 +177,17 @@ define(['SQLParser'], function(SQLParser) {
 
         expect(seq.exec('abcde1')).toBeUndefined();
       });
+
+      it('should match from specified position', function () {
+        var p1 = parser.txt("abc");
+        var p2 = parser.txt("def");
+        var seq = parser.seq(p1, p2);
+
+        expect(seq.exec('qqqabcdef', 3)).toEqual({
+          res: ["abc", "def"],
+          end: 9
+        });
+      });
     });
 
     describe('rep', function() {
@@ -189,14 +200,16 @@ define(['SQLParser'], function(SQLParser) {
         var s = parser.txt(",");
         var rep = parser.rep(p, s);
 
-        expect(rep.exec('"1,23,456", 0')).toEqual({
+        var result = rep.exec("1,23,456", 0);
+
+        expect(result).toEqual({
           res: ["1", "23", "456"],
           end: 8
         });
       });
-
-
     });
+
+
   });
 });
 

@@ -73,30 +73,30 @@ define(['ParserPattern'], function(Pattern) {
         var resArr = [];
 
         for (var i = 0; i < patterns.length; i++) {
-          var pos = resPos || 0;
+          var pos = pos || 0;
           var result = patterns[i].exec(str, pos);
           if ( !result ) return;
           resArr.push(result.res);
-          var resPos = result.end;
+          pos = result.end;
         }
 
         return {
           res: resArr,
-          end: resPos
+          end: pos
         };
       });
     },
 
     rep: function(pattern, separator) {
-      /*var separated;
-      if (!separator) {
-        separated = pattern;
-      } else {
-        separated = this.seq(separator, pattern).then(r => r[1]);
-      }
+      var separated= !separator ? pattern :
+                                            this.seq(separator, pattern).then(function(r) {
+                                              return r[1];
+                                            });
 
       return new Pattern(function (str, pos) {
-        var res = [], end = pos, r = pattern.exec(str, end);
+        var res = [],
+          end = pos,
+          r = pattern.exec(str, end);
 
         while (r && r.end > end) {
           res.push(r.res);
@@ -105,7 +105,8 @@ define(['ParserPattern'], function(Pattern) {
         }
 
         return { res: res, end: end };
-      });*/
+
+      });
     }
 
   };
