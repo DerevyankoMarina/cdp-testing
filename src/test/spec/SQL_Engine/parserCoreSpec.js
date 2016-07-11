@@ -1,8 +1,8 @@
-define(['SQLParser'], function(SQLParser) {
+define(['ParserCore'], function(ParserCore) {
 
   describe('parserCore', function () {
 
-    var parser = new SQLParser();
+    var parser = new ParserCore();
 
     it('should do defined', function () {
       expect(parser).toBeDefined();
@@ -231,4 +231,3 @@ define(['SQLParser'], function(SQLParser) {
 
   });
 });
-

@@ -1,11 +1,8 @@
 define(['ParserPattern'], function(Pattern) {
-  /*'use strict';*/
-  console.log(Pattern);
 
-  var SQLParser = function() {};
+  var ParserCore = function() {};
 
-
-  SQLParser.prototype = {
+  ParserCore.prototype = {
     txt: function(text) {
       return new Pattern(function (str, pos) {
         if (str.substr(pos, text.length) == text) {
@@ -61,7 +58,7 @@ define(['ParserPattern'], function(Pattern) {
       return new Pattern(function (str, pos) {
         for (var i = 0; i < patterns.length; i++) {
           var res = patterns[i].exec(str, pos);
-          if ( res ) return res;
+          if ( !!res ) return res;
         }
       });
     },
@@ -111,7 +108,7 @@ define(['ParserPattern'], function(Pattern) {
 
   };
 
-  return SQLParser;
+  return ParserCore;
 
 });
 
