@@ -25,25 +25,19 @@ define(['SQLParser'], function(SQLParser) {
           });
         });
 
-/*        it('should be able to parse simple select query with specific parameter', function () {
+        it('should be able to parse simple select query with specific parameter', function () {
           var result = parser.parse('SELECT movie.actor FROM movie');
 
           expect(result).toEqual({
             select: {
               column: {
                 table: 'movie',
-                column: 'Leonardo DiCaprio'
+                column: 'actor'
               },
               from: 'movie'
             }
           });
-        });*/
-
-
+        });
       });
-
-
-
-
   });
 });

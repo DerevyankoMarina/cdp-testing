@@ -13,7 +13,7 @@ define(['ParserCore'], function(ParserCore) {
 
   //Service
   var ws = rgx(/\s+/);
-  var table = rgx(/\[a-z]+/i);
+  var table = rgx(/[a-z][a-z0-9]+/i);
   var column = table;
   var tableColumn = seq(table, txt('.'), column)
     .then(function(res) {
